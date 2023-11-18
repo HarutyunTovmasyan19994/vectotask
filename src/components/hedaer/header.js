@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import Home from "../../assets/icons/Group 46.png"
 import TVSHOW from "../../assets/icons/Group 56.png"
@@ -7,26 +7,28 @@ import Genres from "../../assets/icons/Group 53.png"
 import WatchLater from "../../assets/icons/Group 47.png"
 import SearchIcons from "../../assets/icons/ICON - Search.png"
 import IMG from "../../assets/https_specials-4.png"
+import {useSelector, useDispatch} from "react-redux";
+import {ISBOOLEAN} from "../../redux/action/action";
 import "./header.css"
 
-
 const Header = () => {
-    const [isOpen,setIsOpen] = useState(false)
+    const isBoolean = useSelector(state => state.user.isBoolean)
+    const dispatch = useDispatch()
 
-    const menuItem =[
+    const menuItem = [
         {
-            path:"/search",
+            path: "/search",
             name: "Search",
             icons: SearchIcons
         },
         {
-            path:'/',
-            name:"Home",
-            icons:Home
+            path: '/',
+            name: "Home",
+            icons: Home
         },
         {
-            path:"/tvShow",
-            name:"TV Show",
+            path: "/tvShow",
+            name: "TV Show",
             icons: TVSHOW,
         },
         {
@@ -35,12 +37,12 @@ const Header = () => {
             icons: Movies
         },
         {
-            path:"/genres",
+            path: "/genres",
             name: "Genres",
             icons: Genres
         },
         {
-            path:'/watchLater',
+            path: '/watchLater',
             name: "Watch hLater",
             icons: WatchLater
         }
@@ -49,11 +51,11 @@ const Header = () => {
     return (
         <div className="container">
             <div
-                style={{width: isOpen ? "300px" : '60px'}}
-                onMouseEnter={() => setIsOpen(true)}
-                 onMouseLeave={()=>setIsOpen(false)}
+                style={{width: isBoolean ? "300px" : '60px'}}
+                onMouseEnter={() => dispatch({type: ISBOOLEAN,payload:true})}
+                onMouseLeave={() => dispatch({type: ISBOOLEAN,payload:false})}
             >
-                <div className="info" style={{display: isOpen ? "block" : "none"}}>
+                <div className="info" style={{display: isBoolean ? "block" : "none"}}>
                     <img src={IMG} alt=""/>
                     <p>
                         Harut
@@ -61,7 +63,7 @@ const Header = () => {
                 </div>
                 <div>
                     {
-                        menuItem.map((item,index)=>(
+                        menuItem.map((item, index) => (
                             <NavLink
                                 to={item.path}
                                 key={index}
@@ -70,7 +72,7 @@ const Header = () => {
                             >
                                 <img src={item.icons} alt="" className="icon"/>
                                 <p className="icon_text"
-                                   style={{display: isOpen ? "block" : "none"}}>{item.name}
+                                   style={{display: isBoolean ? "block" : "none"}}>{item.name}
                                 </p>
                             </NavLink>
                         ))
@@ -78,7 +80,7 @@ const Header = () => {
                 </div>
                 <div
                     className="LanHeExit"
-                    style={{display: isOpen ? "block" : "none"}}
+                    style={{display: isBoolean ? "block" : "none"}}
                 >
                     <ul>
                         <li>Language</li>
