@@ -1,12 +1,17 @@
 import React from "react";
-import IMAGE from "../../assets/FeaturedCoverImage.png"
 import FeaturedTitle from "../../assets/FeaturedTitleImage.png"
+import {Swiper,SwiperSlide} from "swiper/react"
 import {FaPlay} from "react-icons/fa";
 import Data  from "../../data.json"
+import IMAGE from "../../assets/FeaturedCoverImage.png"
+import "swiper/css"
+// import "swiper/css/effect-overflow"
+import "swiper/css/pagination"
 import "./home.css"
+import {EffectCoverflow,Pagination,Navigation} from "swiper/modules";
 
 const Home = () => {
-    console.log(Data,"data")
+
     return (
         <div className="home">
             <div>
@@ -27,15 +32,34 @@ const Home = () => {
                 </div>
                 <div className="traindingNow">
                     <p className="trendingNowP"> Trending Now</p>
-                    <div className="filmsBox">
-                        {
-                            Data.TendingNow.map(item=>(
-                                <div className="films">
-                                    <img src={item.CoverImage} alt=""/>
-                                </div>
-                            ))
+                    {/*<div className="filmsBox">*/}
+                        <Swiper
+                        grabCursor={true}
+                        centeredSlides={true}
+                        lap={true}
+                        slidesPerView={"auto"}
+                        coverflowEffect={
+                            {
+                                rotate:0,
+                                stretch:0,
+                                depth:100,
+                                modifier:2.5
+                            }
                         }
-                    </div>
+                        modules={[Pagination]}
+                        className="swiper_container"
+                        >
+                            {
+                                Data.TendingNow.map(item=>(
+                                    <SwiperSlide className="films">
+                                        <img src={item.CoverImage} alt=""/>
+                                    </SwiperSlide>
+                                ))
+                            }
+                        </Swiper>
+
+
+                    {/*</div>*/}
                 </div>
             </div>
 
